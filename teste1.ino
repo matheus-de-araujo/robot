@@ -15,7 +15,7 @@ int motor1,motor2,motor3,motor4;
 
 unsigned long mostradorTimer = 1;
 const unsigned long intervaloMostrador = 5000;
-const unsigned long temp = 1000;
+const unsigned long temp = 50;
 
 void setup() {
 
@@ -27,28 +27,43 @@ void setup() {
   base.attach(pinServ2);
   motorLeft.attach(pinServ3);
   motorRight.attach(pinServ4);
-  
-}
-
-void loop(){
 
   // Posição Inicial
-  move(garra, 20);
-  move(base, 92);
-  move(motorLeft, 90);
-  move(motorRight, 100);
-
-  // Movimento 
-//  move(motorLeft, 110);
-//  move(motorRight, 80);
-
-
-  // tempo de espera para recomeçar
-  delay(100);
-
+  garra.write(20);
+  base.write(92);
+  motorLeft.write(120);
+  motorRight.write(90);
 }
 
-void move (Servo servo, int angulo) {
-  servo.write(angulo);
-  delay(temp);
+void loop(){    
+  // Posição Inicial
+  int angulo = 92;
+  while(true) {
+    Serial.print(angulo);
+    Serial.print("\n");
+    base.write(angulo);
+    angulo --;
+    if(angulo == 25) {
+      break;
+    }
+    delay(temp);
+  }
+
+  // Posição Final 
+  angulo = 25;
+  while(true) {
+    Serial.print(angulo);
+    Serial.print("\n");
+    base.write(angulo);
+    angulo ++;
+    if(angulo == 92) {
+      break;
+    }
+    delay(temp);
+  }
 }
+
+
+
+
+
