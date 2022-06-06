@@ -28,7 +28,9 @@ void setup() {
   motorLeft.attach(pinServ3);
   motorRight.attach(pinServ4);
 
-  // Posição Inicial
+  /*
+  * Seta a posição inicial para cada servo motor
+  */
   garra.write(20);
   base.write(92);
   motorLeft.write(120);
@@ -36,12 +38,15 @@ void setup() {
 }
 
 void loop(){    
-  // Posição Inicial
+
+  /*
+  * Posição Inicial
+  * Começa apartir do ângulo de 92 e vai descrescendo para o ângulo de 25
+  * Foi adicionado um tempo de 50 milisegundos entre cada descréscimo de ângulo
+  */
   int angulo = 92;
   while(true) {
-    Serial.print(angulo);
-    Serial.print("\n");
-    base.write(angulo);
+    print(angulo);
     angulo --;
     if(angulo == 25) {
       break;
@@ -49,16 +54,25 @@ void loop(){
     delay(temp);
   }
 
-  // Posição Final 
+  /*
+  * Posição Final
+  * Começa apartir do ângulo de 25 e vai crescendo para o ângulo de 92
+  * Foi adicionado um tempo de 50 milisegundos entre cada acréscimo de ângulo
+  */
   angulo = 25;
   while(true) {
-    Serial.print(angulo);
-    Serial.print("\n");
-    base.write(angulo);
+    print(angulo);
     angulo ++;
     if(angulo == 92) {
       break;
     }
     delay(temp);
   }
+}
+
+// Essa função mostra o ângulo recebido por parâmetro de forma formatada
+void print(int angulo){
+  Serial.print(angulo);
+  Serial.print("\n");
+  base.write(angulo);
 }
